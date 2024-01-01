@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [count, setCount] = useState(0);
+  const [tasks, setTasks] = useState(['Learn React', 'Build awesome apps']);
+  const [newTask, setNewTask] = useState('');
+
+  const addTask = () => {
+    if (newTask.trim()) {
+      setTasks([...tasks, newTask]);
+      setNewTask('');
+    }
+  };
+
   return (
     <div className="App">
       <h1>Welcome to My Simple Page</h1>
@@ -13,9 +24,41 @@ function App() {
       </div>
       
       <div className="container">
+        <h2>Interactive Counter</h2>
+        <p>Count: <span className="counter">{count}</span></p>
+        <div className="button-group">
+          <button onClick={() => setCount(count - 1)}>-</button>
+          <button onClick={() => setCount(0)}>Reset</button>
+          <button onClick={() => setCount(count + 1)}>+</button>
+        </div>
+      </div>
+
+      <div className="container">
+        <h2>Todo List</h2>
+        <div className="todo-input">
+          <input
+            type="text"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+            placeholder="Add new task..."
+            onKeyPress={(e) => e.key === 'Enter' && addTask()}
+          />
+          <button onClick={addTask}>Add</button>
+        </div>
+        <ul className="todo-list">
+          {tasks.map((task, index) => (
+            <li key={index}>{task}</li>
+          ))}
+        </ul>
+      </div>
+      
+      <div className="container">
         <h2>Features</h2>
         <ul>
           <li>React components</li>
+          <li>Interactive counter</li>
+          <li>Todo list functionality</li>
+          <li>State management</li>
           <li>Responsive design</li>
           <li>Clean styling</li>
           <li>Easy to customize</li>
